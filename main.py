@@ -1,3 +1,4 @@
-number = 125
-x, y, z = (int(number / 100), int((number % 100) / 10), number % 10)
-print(x + y + z)
+name = input('what\'s your name???\n')
+print(f'so I see, that you are {name}')
+age = input('and how old are you\n')
+print(f'{age} is a nice age I guess :)')
