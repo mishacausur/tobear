@@ -1,4 +1,2 @@
-text = 'I\'m studying "Python"'
-newText = text.replace('"', '\\"').replace("'", "\\'")
-
-print(newText)
+text = input()
+print(text[4:])
