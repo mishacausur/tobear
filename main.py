@@ -1,2 +1,2 @@
 text = input()
-print(text[::-1])
+print(len(text))
