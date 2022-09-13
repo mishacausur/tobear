@@ -1,8 +1,2 @@
-num = float(input())
-if num > 0:
-    print("1")
-elif num < 0:
-    print("-1")
-else:
-    print("0")
-
+x, y, z = map(int, input().split())
+print(max(x,y,z))
