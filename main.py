@@ -1,6 +1,4 @@
-first, second = map(int, input().split())
-a = first % 10 == 0 or second % 10 != 0
-b = first % 10 != 0 or second % 10 == 0
-print(a != b)
-print('first', a)
-print('second', b)
+x, y = map(int, input().split())
+z = x**2 + y**2
+print(z**(1/2) > 10)
+
