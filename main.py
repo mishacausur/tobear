@@ -1,6 +1,10 @@
-N = int(input())
-u = 1
-for i in range(1, N + 1):
-    u *= i
+n, k = input().split()
+n = int(n)
+k = float(k)
 
-print(u)
+series_sum = 0.0
+
+for i in range(1, n + 1):
+    series_sum += i**k
+
+print(round(series_sum, 3))
