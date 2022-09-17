@@ -1,5 +1,6 @@
-numbers = list(map(int, input().split()))
-if len(numbers) > 1:
-    numbers[0], numbers[-1] = numbers[-1], numbers[0]
-print(numbers)
+N = int(input())
+u = 1
+for i in range(1, N + 1):
+    u *= i
 
+print(u)
