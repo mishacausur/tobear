@@ -1,10 +1,13 @@
-n, k = input().split()
-n = int(n)
-k = float(k)
+number = int(input())
+value: bool
+if number > 2:
+    for item in range(2, number - 1):
+        if number % item == 0:
+            value = False
+            break
+        else:
+            value = True
 
-series_sum = 0.0
-
-for i in range(1, n + 1):
-    series_sum += i**k
-
-print(round(series_sum, 3))
+else:
+    value = True
+print(value)
