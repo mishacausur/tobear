@@ -1,5 +1,4 @@
-import pandas as pd
+def counter(element, silier):
+    return (element * 2, silier * 3)
 
-df = pd.read_csv('callers.csv')
-df = df.rename(columns = { 'user id': 'user_id'})
-df.info()
+assert counter(2, 3) == (4, 9)
