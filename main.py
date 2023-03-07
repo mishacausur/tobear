@@ -1,12 +1,18 @@
 import pandas as pd
 
-hogwarts_points = pd.read_csv('hogwarts_points.csv')
+df = pd.read_csv('logs.csv')
+visits = df.groupby('source')['user_id'].count()
+print(visits)
 
-print(hogwarts_points)
-print()
-print(hogwarts_points['points'].sum())
-print(hogwarts_points.groupby('faculty_name')['points'].sum().sum())
-print('Winner is', hogwarts_points.groupby('faculty_name')['points'].sum().idxmax())
+class Sourcer:
+    def source(a, b):
+        return a + b
 
-hogwarts_points = hogwarts_points.fillna('Гриффиндор')
-print('Winner is', hogwarts_points.groupby('faculty_name')['points'].sum().idxmax())
+print(Sourcer.source(2, 3))
+
+try:
+     print(Sourcer.source([1, 2]))
+except:
+    print('Can\'t source')
+
+print(Sourcer.source(*[10, 20]))
