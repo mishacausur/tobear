@@ -28,3 +28,4 @@ people_df = pd.DataFrame({
 })
 
 print(people_df["name"].count() )
+
