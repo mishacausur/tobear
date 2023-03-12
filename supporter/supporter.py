@@ -39,11 +39,5 @@ def alert_group_importance(row):
             return 'блокер'
         return 'в порядке очереди'
 
-#row_values = ['высокий', 1]
-#row_columns = ['alert_group', 'importance']
-#row = pd.Series(data=row_values, index=row_columns)
-#print(alert_group_importance(row))
-
-
 support_log_grouped['importance_status'] = support_log_grouped.apply(alert_group_importance, axis=1)
 print(support_log_grouped['importance_status'].value_counts())
