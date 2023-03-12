@@ -19,4 +19,31 @@ def alert_group(messages):
 
 support_log_grouped['alert_group'] = support_log_grouped['user_id'].apply(alert_group)
 
-print(support_log_grouped.groupby('alert_group').sum())
+#print(support_log_grouped.groupby('alert_group').sum())
+
+support_log_grouped = pd.read_csv('support_log_grouped.csv')
+#print(support_log_grouped)
+
+def alert_group_importance(row):
+    messages = row['alert_group']
+    if messages == 'средний':
+        if row['importance'] == 1:
+            return 'обратить внимание'
+        return 'в порядке очереди'
+    elif messages == 'высокий':
+        if row['importance'] == 1:
+            return 'высокий риск'
+        return 'в порядке очереди'
+    else:
+        if row['importance'] == 1:
+            return 'блокер'
+        return 'в порядке очереди'
+
+#row_values = ['высокий', 1]
+#row_columns = ['alert_group', 'importance']
+#row = pd.Series(data=row_values, index=row_columns)
+#print(alert_group_importance(row))
+
+
+support_log_grouped['importance_status'] = support_log_grouped.apply(alert_group_importance, axis=1)
+print(support_log_grouped['importance_status'].value_counts())
