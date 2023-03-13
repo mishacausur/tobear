@@ -4,9 +4,15 @@ data = pd.read_csv('data.csv')
 
 income_types_mean = data.groupby('income_type')['total_income'].transform('median')
 data['total_income'] = data['total_income'].fillna(income_types_mean)
+# the same but longer
+#for t in data['income_type'].unique():
+#    data.loc[(data['income_type'] == t) & (data['total_income'].isna()), 'total_income'] = \
+#    data.loc[(data['income_type'] == t), 'total_income'].median()
+
 data['days_employed'] = data['days_employed'].abs()
 employed_days_mean = data.groupby('income_type')['days_employed'].transform('median')
 data = data.drop(data[(data['children'] == 20) | (data['children'] == -1)].index)
+#data = data[(data['children'] != -1) & (data['children'] != 20)]
 data['days_employed'] = data['days_employed'].fillna(employed_days_mean)
 data['total_income'] = data['total_income'].astype(int)
 data['education'] = data['education'].str.lower()
@@ -27,14 +33,17 @@ def categorize_income(income):
 data['total_income_category'] = data['total_income'].apply(categorize_income)
 
 def categorize_purpose(purpose):
-    if ('жилья' in purpose) or ('жильем' in purpose) or ('недвижимости' in purpose) or ('недвижимость' in purpose) or ('недвижимостью' in purpose) or ('жилье' in purpose) or ('жилью' in purpose):
-        return 'операции с недвижимостью'
-    if ('автомобиля' in purpose) or ('автомобили' in purpose) or ('автомобилем' in purpose) or ('автомобиль' in purpose):
-        return 'операции с автомобилем'
-    if ('образование' in purpose) or ('образованием' in purpose) or ('образования' in purpose) or ('образованием' in purpose):
-        return 'получение образования'
-    else:
-        return 'проведение свадьбы'
+    try:
+        if 'автом' in purpose:
+            return 'операции с автомобилем'
+        elif 'жил' in purpose or 'недвиж' in purpose:
+            return 'операции с недвижимостью'
+        elif 'свад' in purpose:
+            return 'проведение свадьбы'
+        elif 'образов' in purpose:
+            return 'получение образования'
+    except:
+        return 'нет категории'
 
 data['purpose_category'] = data['purpose'].apply(categorize_purpose)
 
