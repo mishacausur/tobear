@@ -25,5 +25,23 @@ def categorize_income(income):
         return 'A'
 
 data['total_income_category'] = data['total_income'].apply(categorize_income)
+
+def categorize_purpose(purpose):
+    if ('жилья' in purpose) or ('жильем' in purpose) or ('недвижимости' in purpose) or ('недвижимость' in purpose) or ('недвижимостью' in purpose) or ('жилье' in purpose) or ('жилью' in purpose):
+        return 'операции с недвижимостью'
+    if ('автомобиля' in purpose) or ('автомобили' in purpose) or ('автомобилем' in purpose) or ('автомобиль' in purpose):
+        return 'операции с автомобилем'
+    if ('образование' in purpose) or ('образованием' in purpose) or ('образования' in purpose) or ('образованием' in purpose):
+        return 'получение образования'
+    else:
+        return 'проведение свадьбы'
+
+data['purpose_category'] = data['purpose'].apply(categorize_purpose)
+
 print(data.head(20))
+
+
+
+
+
 
