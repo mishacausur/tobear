@@ -1,7 +1,9 @@
 import pandas as pd
+import seaborn as sb
+import matplotlib.pyplot as plt
 
 data = pd.read_csv('data.csv')
-
+print(data.isna().count())
 income_types_mean = data.groupby('income_type')['total_income'].transform('median')
 data['total_income'] = data['total_income'].fillna(income_types_mean)
 # the same but longer
@@ -47,10 +49,24 @@ def categorize_purpose(purpose):
 
 data['purpose_category'] = data['purpose'].apply(categorize_purpose)
 
-print(data.head(20))
+
+#print(data[data['children'] > 4 ]['debt'].count())
+print(data.groupby('children')['debt'].mean())
+
+data.groupby('children')['debt'].mean().plot(kind='bar')
+
+
+data['incomes_group'] = pd.qcut(data['total_income'], 6)
+r = data.groupby('incomes_group')['debt'].mean()
+b= r.transpo
+ax = r.plot()
+ax.set_xlabel(ax.get_xlabel()[::-1])
 
 
 
 
 
 
+
+2174
+21525
