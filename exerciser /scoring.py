@@ -49,13 +49,11 @@ def categorize_purpose(purpose):
 
 data['purpose_category'] = data['purpose'].apply(categorize_purpose)
 
-
-#print(data[data['children'] > 4 ]['debt'].count())
-#print(data.groupby('children')['debt'].mean())
-
 data.groupby('children')['debt'].mean().plot(kind='bar')
 
 data['incomes_group'] = pd.qcut(data['total_income'], 6)
 
 data['total_debt'] = data[data['debt'] == 1].count()
-print(data)
+
+print(data[data['children'] > 4 ]['debt'].count())
+print(data.groupby('children')['debt'].mean())
