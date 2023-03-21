@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 data = pd.read_csv('visits.csv', sep='\t')
 stat = data.pivot_table(index='name', values='time_spent', aggfunc='mean')
@@ -15,4 +16,9 @@ print(f'Количество заездов на АЗС в сутки: {station_
 name = data['name'].value_counts()
 print(name.head(10))
 
-data['time_spent'].hist(bins=100)
+#data['time_spent'].hist(bins=100, range = (0, 1500))
+#data.boxplot()
+#plt.ylim(-100, 1000)
+#plt.show()
+
+print(data.describe())
