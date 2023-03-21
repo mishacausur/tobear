@@ -14,3 +14,5 @@ station_visits_per_day = total_visits / total_stations / total_days
 print(f'Количество заездов на АЗС в сутки: {station_visits_per_day}')
 name = data['name'].value_counts()
 print(name.head(10))
+
+data['time_spent'].hist(bins=100)
