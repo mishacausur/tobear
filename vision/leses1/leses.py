@@ -22,3 +22,16 @@ print(name.head(10))
 #plt.show()
 
 print(data.describe())
+print(data.sort_values('time_spent', ascending=False).head(10))
+
+sample = data.query('id == "3c1e4c52"') # only this gas
+print(len(sample)) # count of rows about sample
+
+data.hist('time_spent', bins=100, range=(0, 1500))
+plt.show()
+
+sample.hist('time_spent',bins=100, range=(0, 1500))
+plt.show()
+
+data['date_time'] = pd.to_datetime(data['date_time'], format='%Y-%m-%d %H:%M')
+print(data.head())
