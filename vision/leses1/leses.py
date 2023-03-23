@@ -21,17 +21,23 @@ print(name.head(10))
 #plt.ylim(-100, 1000)
 #plt.show()
 
-print(data.describe())
-print(data.sort_values('time_spent', ascending=False).head(10))
+#print(data.describe())
+#print(data.sort_values('time_spent', ascending=False).head(10))
 
 sample = data.query('id == "3c1e4c52"') # only this gas
-print(len(sample)) # count of rows about sample
+#print(len(sample)) # count of rows about sample
 
-data.hist('time_spent', bins=100, range=(0, 1500))
+#data.hist('time_spent', bins=100, range=(0, 1500))
+#plt.show()
+
+#sample.hist('time_spent',bins=100, range=(0, 1500))
+#plt.show()
+
+#data['date_time'] = pd.to_datetime(data['date_time'], format='%Y-%m-%d %H:%M')
+#print(data.head())
+
+data['date_time'] = pd.to_datetime(data['date_time'], format='%Y-%m-%dT%H:%M:%S')
+data['local_time'] = data['date_time'] + pd.Timedelta(hours=3)
+sample = data.query('id == "3c1e4c52"')
+sample.plot(x='local_time', y='time_spent', style='o', ylim=(0, 1000), grid=True, figsize=(12, 6))
 plt.show()
-
-sample.hist('time_spent',bins=100, range=(0, 1500))
-plt.show()
-
-data['date_time'] = pd.to_datetime(data['date_time'], format='%Y-%m-%d %H:%M')
-print(data.head())
