@@ -38,6 +38,29 @@ sample = data.query('id == "3c1e4c52"') # only this gas
 
 data['date_time'] = pd.to_datetime(data['date_time'], format='%Y-%m-%dT%H:%M:%S')
 data['local_time'] = data['date_time'] + pd.Timedelta(hours=3)
-sample = data.query('id == "3c1e4c52"')
-sample.plot(x='local_time', y='time_spent', style='o', ylim=(0, 1000), grid=True, figsize=(12, 6))
+#(data
+#    .query('id == "3c1e4c52"')
+ #   .plot(x='local_time', y='time_spent',
+ #         ylim=(0, 1000), style='o', grid=True, figsize=(12, 6))
+#)
+
+data['date_hour'] = data['local_time'].dt.round('1H')
+(
+    data.query('id == "3c1e4c52"')
+    .pivot_table(index='date_hour', values='time_spent', aggfunc='median')
+    .plot(grid=True, figsize=(12, 5))
+)
+
+(
+    data.query('id == "3c1e4c52" and time_spent < 1000')
+    .pivot_table(index='date_hour', values='time_spent')
+    .plot(grid=True, figsize=(12, 5))
+)
+
+(
+    data
+        .query('id=="3c1e4c52"')
+        .pivot_table(index='date_hour', values='time_spent', aggfunc='count')
+        .plot(grid=True, figsize=(12, 5))
+)
 plt.show()
