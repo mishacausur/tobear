@@ -44,7 +44,7 @@ good_data = good_data.query('(time_spent >= 60) and (time_spent) <= 1000')
 
 good_stations_stat = good_data.groupby('id')['time_spent'].median()
 good_stations_stat.hist(bins=50)
-plt.show()
+#plt.show()
 # THE SAME
 gdsttat = good_data.pivot_table(values='time_spent', index='id', aggfunc='median')
 gdsttat.hist(bins=50)
@@ -52,3 +52,49 @@ gdsttat.hist(bins=50)
 
 good_stat = good_data.pivot_table(index='name', values='time_spent', aggfunc='median')
 print(good_stat.sort_values('time_spent'))
+
+
+
+median_station_stat = data.pivot_table(
+    index='id', values='time_spent', aggfunc='median'
+)
+good_stations_stat = good_data.pivot_table(
+    index='id', values='time_spent', aggfunc='median'
+)
+
+ax = median_station_stat.plot(
+    kind='hist',
+    y='time_spent',
+    histtype='step',
+    range=(0, 500),
+    bins=25,
+    linewidth=5,
+    alpha=0.7,
+    label='raw',
+)
+good_stations_stat.plot(
+    kind='hist',
+    y='time_spent',
+    histtype='step',
+    range=(0, 500),
+    bins=25,
+    linewidth=5,
+    alpha=0.7,
+    label='filtered',
+    ax=ax,
+    grid=True,
+    legend=True,
+)
+plt.show()
+
+stat['good_time_spent'] = good_stat['time_spent']
+
+print(stat)
+
+id_name = good_data.pivot_table(index='id', values='name', aggfunc=['first', 'count'])
+
+print(id_name.head())
+
+#station_stat_full = id_name.join(good_stations_stat, on='id')
+station_stat_full = id_name.join(good_stations_stat)
+print(station_stat_full.head())
