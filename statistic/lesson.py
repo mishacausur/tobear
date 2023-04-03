@@ -19,3 +19,18 @@ print (standard_deviation)
 # стандартное отклонение выборки
 standard_deviation = np.std(data, ddof=1)
 print (standard_deviation)
+# корень из дисперсии будет равен стандартному отклонению:
+variance = 2.9166666666666665
+standard_deviation = np.sqrt(variance)
+print(standard_deviation)
+# дисперсия генеральной совокупности
+variance = np.var(data)
+print(variance)
+
+adv_mean = 3
+adv_var = 0.25
+adv_std = np.sqrt(adv_var)# рассчитайте стандартное отклонение
+
+adv_time = adv_mean + (adv_std * 3)# рассчитайте время показа пользователю всплывающего сообщения
+
+print(f'Время показа сообщения {adv_time}')
