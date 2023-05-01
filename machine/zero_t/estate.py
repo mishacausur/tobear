@@ -8,6 +8,8 @@ df['price_class'] = df['last_price'].apply(lambda x: 1.0 if x > 5650000 else 0.0
 features = df.loc[:, ['total_area', 'rooms', 'ceiling_height', 'floors_total',
        'living_area', 'floor', 'is_apartment', 'studio', 'open_plan',
        'kitchen_area', 'balcony', 'airports_nearest', 'cityCenters_nearest']]
+#OR
+# features = df.drop(['last_price', 'price_class'], axis=1)
 target = df['price_class']
 
 model = DecisionTreeClassifier()
@@ -22,3 +24,14 @@ new_features.loc[0, ['total_area', 'rooms', 'living_area', 'kitchen_area']] = [9
 new_features.loc[1, ['total_area', 'rooms', 'living_area', 'kitchen_area']] = [109, 2, 32, 40.5]
 answers = model.predict(new_features)
 print(answers)
+
+test_df = pd.read_csv('/datasets/test_data.csv').head(3)
+test_df.loc[df['last_price'] > 5650000, 'price_class'] = 1
+test_df.loc[df['last_price'] <= 5650000, 'price_class'] = 0
+test_features = test_df.drop(['last_price', 'price_class'], axis=1)
+
+test_target = test_df['price_class']
+
+test_predictions = model.predict(test_features)
+print(f'Предсказания: {test_predictions}')
+print('Правильные ответы: ', test_target.to_string(index=False).split('\n'))
