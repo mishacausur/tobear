@@ -49,3 +49,19 @@ if results.pvalue < alpha: # сравните p-значение с alpha
     print('Отвергаем нулевую гипотезу')
 else:
     print('Не получилось отвергнуть нулевую гипотезу')
+
+
+
+
+people = [
+    {"name": "Jenny", "kind": 'Dog'},
+    {'name': 'Pussifer', 'kind': 'Cat'}
+]
+
+def f(person):
+    return  person['kind']
+
+people.sort(key=f)
+print(people)
+people.sort(key=lambda person: person['name'])
+print(people)
