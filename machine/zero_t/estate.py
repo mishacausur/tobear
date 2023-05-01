@@ -26,12 +26,11 @@ answers = model.predict(new_features)
 print(answers)
 
 test_df = pd.read_csv('/datasets/test_data.csv').head(3)
-test_df.loc[df['last_price'] > 5650000, 'price_class'] = 1
-test_df.loc[df['last_price'] <= 5650000, 'price_class'] = 0
+
+test_df.loc[test_df['last_price'] > 5650000, 'price_class'] = 1
+test_df.loc[test_df['last_price'] <= 5650000, 'price_class'] = 0
 test_features = test_df.drop(['last_price', 'price_class'], axis=1)
-
 test_target = test_df['price_class']
-
 test_predictions = model.predict(test_features)
 print(f'Предсказания: {test_predictions}')
-print('Правильные ответы: ', test_target.to_string(index=False).split('\n'))
+print('Правильные ответы:', test_target.values.flatten())
