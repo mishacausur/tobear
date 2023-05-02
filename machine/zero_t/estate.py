@@ -34,3 +34,12 @@ test_target = test_df['price_class']
 test_predictions = model.predict(test_features)
 print(f'Предсказания: {test_predictions}')
 print('Правильные ответы:', test_target.values.flatten())
+
+def error_count(answers, predictions):
+    counter = 0
+    for index in answers.index:
+        if answers[index] != predictions[index]:
+            counter += 1
+    return counter
+
+print("Ошибок:", error_count(test_target, test_predictions))
