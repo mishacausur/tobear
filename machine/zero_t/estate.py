@@ -38,8 +38,14 @@ print('Правильные ответы:', test_target.values.flatten())
 def error_count(answers, predictions):
     counter = 0
     for index in answers.index:
+    #for i in range(len(answers)):
         if answers[index] != predictions[index]:
             counter += 1
     return counter
 
+def accuracy(answers, predictions):
+    total = len(answers) - error_count(answers, predictions)
+    return total / len(answers)
+
 print("Ошибок:", error_count(test_target, test_predictions))
+print("Accuracy:", accuracy(test_target, test_predictions))
