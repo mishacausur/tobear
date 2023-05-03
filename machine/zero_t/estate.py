@@ -1,5 +1,6 @@
 import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
 
 df = pd.read_csv('train_data.csv')
 
@@ -49,3 +50,20 @@ def accuracy(answers, predictions):
 
 print("Ошибок:", error_count(test_target, test_predictions))
 print("Accuracy:", accuracy(test_target, test_predictions))
+
+print("Accuracy")
+print("Обучающая выборка:", accuracy_score(target, train_predictions))
+print("Тестовая выборка:", accuracy_score(test_target, test_predictions))
+
+best_model = None
+best_result = 0
+for depth in range(1, 6):
+	model = DecisionTreeClassifier(random_state=12345, max_depth=depth)
+	model.fit(features, target)
+	predictions = model.predict(features)
+	result = accuracy_score(target, predictions)
+	if result > best_result:
+		best_model = model
+		best_result = result
+
+print("Accuracy лучшей модели:", best_result)
