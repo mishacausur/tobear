@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
 
 df = pd.read_csv('train_data.csv')
 
@@ -52,7 +53,7 @@ print("Ошибок:", error_count(test_target, test_predictions))
 print("Accuracy:", accuracy(test_target, test_predictions))
 
 print("Accuracy")
-print("Обучающая выборка:", accuracy_score(target, train_predictions))
+print("Обучающая выборка:", accuracy_score(target, answers))
 print("Тестовая выборка:", accuracy_score(test_target, test_predictions))
 
 best_model = None
@@ -67,3 +68,15 @@ for depth in range(1, 6):
 		best_result = result
 
 print("Accuracy лучшей модели:", best_result)
+
+df_train, df_valid = train_test_split(df, test_size=.25, random_state=12345)
+
+features_train = df_train.drop(['last_price', 'price_class'], axis=1)
+target_train = df_train['price_class']
+features_valid = df_valid.drop(['last_price', 'price_class'], axis=1)
+target_valid = df_valid['price_class']
+
+print(features_train.shape)
+print(target_train.shape)
+print(features_valid.shape)
+print(target_valid.shape)
