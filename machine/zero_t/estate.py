@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
 
 df = pd.read_csv('train_data.csv')
 
@@ -63,6 +64,7 @@ for depth in range(1, 6):
 	model.fit(features, target)
 	predictions = model.predict(features)
 	result = accuracy_score(target, predictions)
+    print(f'max_depth = {depth} : {result}')
 	if result > best_result:
 		best_model = model
 		best_result = result
@@ -80,3 +82,14 @@ print(features_train.shape)
 print(target_train.shape)
 print(features_valid.shape)
 print(target_valid.shape)
+
+#FOREST
+for est in range(1, 11):
+    model = RandomForestClassifier(random_state=12345, n_estimators=est)
+    model.fit(features_train, target_train)
+    result = model.score(features_valid, target_valid)
+    if result > best_result:
+        best_model = model
+        best_result = result
+
+print("Accuracy наилучшей модели на валидационной выборке:", best_result)
