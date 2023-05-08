@@ -10,7 +10,7 @@ print(result)
 df = pd.read_csv('train_data.csv')
 
 features = df.drop(['last_price'], axis=1)
-target = df['last_price'] / 1000000
+target = df['last_price'] / 1_000_000
 
 predictions = pd.Series(target.mean(), index=target.index)
 mse = mean_squared_error(target, predictions)
