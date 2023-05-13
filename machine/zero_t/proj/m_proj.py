@@ -71,17 +71,21 @@ plt.show()
 best_est = 0
 best_forest_model = None
 best_forest_result = 0
-for est in range(1, 11):
-    forest_model = RandomForestClassifier(random_state=12345, n_estimators=est)
-    forest_model.fit(features_train, target_train)
-    result = forest_model.score(features_valid, target_valid)
-    if result > best_forest_result:
-        best_forest_model = forest_model
-        best_forest_result = result
-        best_est = est
+best_max_depth = 0
+
+for est in tqdm(range(1, 11)):
+    for depth in range(1, 6):
+        forest_model = RandomForestClassifier(random_state=12345, n_estimators=est, max_depth=depth)
+        forest_model.fit(features_train, target_train)
+        result = forest_model.score(features_valid, target_valid)
+        if result > best_forest_result:
+            best_forest_model = forest_model
+            best_forest_result = result
+            best_est = est
+            best_max_depth = depth
 
 print(f"Accuracy наилучшей модели на валидационной выборке: {best_forest_result}")
-print(f'Параметр: {best_est}')
+print(f'Параметры: n_estimators={best_est}, max_depth={best_max_depth}')
 
 log_reg_model = LogisticRegression(random_state=12345, solver='lbfgs', max_iter=1000)
 log_reg_model.fit(features_train, target_train)
