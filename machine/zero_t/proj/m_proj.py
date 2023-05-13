@@ -1,19 +1,29 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+from tqdm import tqdm
 from sklearn.model_selection import train_test_split
-from sklearn.model_selection import cross_val_score
-from sklearn.model_selection import KFold
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from sklearn.dummy import DummyClassifier
+from sklearn.tree import plot_tree
 
 df = pd.read_csv('users_behavior.csv')
+
+counts = df['is_ultra'].value_counts()
+plt.bar([0, 1], counts.values)
+plt.xticks([0, 1], ['0', '1'])
+plt.xlabel('is_ultra')
+plt.ylabel('Количество примеров')
+plt.title('Распределение значений в столбце "is_ultra"')
+plt.show()
+
 features = df.drop(['is_ultra'], axis=1)
 target = df['is_ultra']
 
-features_train_valid, features_test, target_train_valid, target_test = train_test_split(features, target, test_size=0.2, random_state=12345)
-features_train, features_valid, target_train, target_valid = train_test_split(features_train_valid,  target_train_valid, test_size=0.25, random_state=12345)
+features_train_valid, features_test, target_train_valid, target_test = train_test_split(features, target, test_size=0.2, random_state=12345, stratify=target)
+features_train, features_valid, target_train, target_valid = train_test_split(features_train_valid,  target_train_valid, test_size=0.25, random_state=12345, stratify=target_train_valid)
 
 print("Тренировочная выборка:", features_train.shape[0])
 print("Валидационная выборка:", features_valid.shape[0])
