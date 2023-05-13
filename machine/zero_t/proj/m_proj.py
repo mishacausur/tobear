@@ -29,19 +29,44 @@ print("Тренировочная выборка:", features_train.shape[0])
 print("Валидационная выборка:", features_valid.shape[0])
 print("Тестовая выборка:", features_test.shape[0])
 
-
 best_tree_model = None
 tree_best_result = 0
-for depth in range(1, 6):
+train_scores = []
+valid_scores = []
+
+for depth in tqdm(range(1, 11)):
     tree_model = DecisionTreeClassifier(random_state=12345, max_depth=depth)
     tree_model.fit(features_train, target_train)
-    predictions = tree_model.predict(features_valid)
-    result = accuracy_score(target_valid, predictions)
-    if result > tree_best_result:
+    train_predictions = tree_model.predict(features_train)
+    valid_predictions = tree_model.predict(features_valid)
+
+    train_accuracy = accuracy_score(target_train, train_predictions)
+    valid_accuracy = accuracy_score(target_valid, valid_predictions)
+
+    train_scores.append(train_accuracy)
+    valid_scores.append(valid_accuracy)
+
+    if valid_accuracy > tree_best_result:
         best_tree_model = tree_model
-        tree_best_result = result
+        tree_best_result = valid_accuracy
 
 print("Accuracy лучшей модели:", tree_best_result)
+
+depths = range(1, 11)
+plt.plot(depths, train_scores, label='Train Accuracy')
+plt.plot(depths, valid_scores, label='Validation Accuracy')
+plt.xlabel('max_depth')
+plt.ylabel('Accuracy')
+plt.title('Accuracy vs max_depth')
+plt.legend()
+plt.show()
+
+tree_model = DecisionTreeClassifier(random_state=12345, max_depth=3)
+tree_model.fit(features_train, target_train)
+
+plt.figure(figsize=(12, 8))
+plot_tree(tree_model, feature_names=features_train.columns, filled=True)
+plt.show()
 
 best_est = 0
 best_forest_model = None
