@@ -96,26 +96,36 @@ print(log_reg_result)
 test_model_score = best_forest_model.score(features_test, target_test)
 print(f'Accuracy модели на тестовой выборке: {test_model_score}')
 
-dummy_model = DummyClassifier(strategy='uniform')
+features_train_concat = pd.concat([features_train, features_valid])
+target_train_concat = pd.concat([target_train, target_valid])
+
+concat_model = RandomForestClassifier(random_state=12345, n_estimators=8, max_depth=5)
+concat_model.fit(features_train_concat, target_train_concat)
+
+test_score = concat_model.score(features_test, target_test)
+test_score
+
+dummy_model = DummyClassifier(strategy='most_frequent')
 dummy_model.fit(features_train, target_train)
 
 dummy_accuracy = dummy_model.score(features_valid, target_valid)
-print(f"Оценка пустой модели: {dummy_accuracy}")
+print(f"Оценка наивной модели: {dummy_accuracy}")
 
 tree_accuracy = best_tree_model.score(features_valid, target_valid)
 if tree_accuracy > dummy_accuracy:
-    print("Дерево решений лучше. чем пустая модель.")
+    print("Дерево решений лучше. чем пусНаивнаятая модель.")
 else:
-    print("Пустая модель лучше, чем дерево решений.")
+    print("Наивная модель лучше, чем дерево решений.")
 
 forest_accuracy = best_forest_model.score(features_valid, target_valid)
 if forest_accuracy > dummy_accuracy:
-    print("Лес деревьев лучше, чем пустая модель.")
+    print("Лес деревьев лучше, чем Наивная модель.")
 else:
-    print("Пустая модель лучше, чем лес деревьев.")
+    print("Наивная модель лучше, чем лес деревьев.")
 
 logreg_accuracy = log_reg_model.score(features_valid, target_valid)
 if logreg_accuracy > dummy_accuracy:
-    print("Логистическая регрессия лучше, чем пустая модель.")
+    print("Логистическая регрессия лучше, чем Наивная модель.")
 else:
-    print("Пустая модель лучше, чем логистическая регрессия.")
+    print("Наивная модель лучше, чем логистическая регрессия.")
+
