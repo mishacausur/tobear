@@ -9,5 +9,11 @@ features_valid = valid.drop('Claim', axis=1)
 target_valid = valid['Claim']
 print(features_train.shape)
 print(features_valid.shape)
+print(data.dtypes)
+
+data_ohe = pd.get_dummies(data, drop_first=True)
+target = data_ohe['Claim']
+features = data_ohe.drop('Claim', axis=1)
+
 
 
