@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import OrdinalEncoder
 
 data = pd.read_csv('travel_insurance.csv')
 # train, valid = train_test_split(data, test_size=.25, random_state=12345)
@@ -19,6 +20,11 @@ features = data_ohe.drop('Claim', axis=1)
 features_train, target_train, features_valid, target_valid = train_test_split(features, target, test_size=.25, random_state=12345)
 model = LogisticRegression(random_state=12345, solver='liblinear')
 model.fit(features_train, features_valid)
+
+encoder = OrdinalEncoder()
+encoder.fit(data)
+data_ordinal = pd.DataFrame(encoder.transform(data), columns=data.columns)
+print(data_ordinal.head())
 
 
 
