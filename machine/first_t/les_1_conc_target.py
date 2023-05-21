@@ -16,11 +16,11 @@ def upsample(features, target, repeat):
     target_ones = target[target == 1]
     features_upsampled = pd.concat([features_zeros] + [features_ones] * repeat)
     target_upsampled = pd.concat([target_zeros] + [target_ones] * repeat)
-    return features_upsampled, target_upsampled
-
-shuffle(features_train, target_train, random_state=12345)
+    return shuffle(features_upsampled, target_upsampled, random_state=12345)
 
 features_upsampled, target_upsampled = upsample(features_train, target_train, 10)
 
-print(features_upsampled.shape)
-print(target_upsampled.shape)
+model = LogisticRegression(random_state=12345, solver='liblinear')
+model.fit(features_upsampled, target_upsampled)
+predicted_valid = model.predict(features_valid)
+print("F1:", f1_score(target_valid, predicted_valid))
