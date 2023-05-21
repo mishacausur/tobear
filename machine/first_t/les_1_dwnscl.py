@@ -1,4 +1,5 @@
 import pandas as pd
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
 
@@ -24,4 +25,8 @@ model = LogisticRegression(random_state=12345, solver='liblinear')
 model.fit(features_downsampled, target_downsampled)
 predicted_valid = model.predict(features_valid)
 
-print("F1:", f1_score(target_valid, predicted_valid))
+#print("F1:", f1_score(target_valid, predicted_valid))
+
+probabilities_valid = model.predict_proba(features_valid)
+probabilities_one_valid = probabilities_valid[:, 1]
+print(probabilities_one_valid[:5])
