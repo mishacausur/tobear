@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_curve
+from sklearn.metrics import roc_auc_score
 
 data = pd.read_csv('travel_insurance_preprocessed.csv')
 
@@ -28,3 +29,6 @@ plt.ylabel('True Positive Rate')
 plt.title('ROC-кривая')
 plt.plot([0, 1], [0, 1], linestyle='--')
 plt.show()
+
+auc_roc = roc_auc_score(target_valid, probabilities_one_valid)
+print(auc_roc)
