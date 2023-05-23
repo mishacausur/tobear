@@ -22,4 +22,10 @@ model = LinearRegression()
 model.fit(features_train, target_train)
 predicted_valid = model.predict(features_valid)
 
+print("Linear Regression")
+print(mean_absolute_error(target_valid, predicted_valid))
+print()
+
+predicted_valid = pd.Series(target_train.median(), index=target_valid.index)
+print("Median")
 print(mean_absolute_error(target_valid, predicted_valid))
